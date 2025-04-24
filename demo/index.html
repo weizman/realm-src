@@ -1,0 +1,186 @@
+<html>
+    <head>
+        <script>
+            const xssChallenge = location.href.includes('self-xss-challenge-msg');
+            if (xssChallenge) {
+                const s = 'background-color: red; color: yellow; font-size: 20px';
+                console.log(`%cYou are currently running under the lax Snow demo app version!`, s);
+                console.log(`%cVisit ${location.href.split('#')[0]} for the strict version!`, s);
+                console.log(`%cREMEMBER: For a Snow bypass to count, it has to work on the strict version too!`, s);
+                setTimeout(() => msg.style.display = 'block', 100);
+                onclick = (e) => {
+                    let {target} = e;
+                    let out = true;
+                    while (target) {
+                        if (target === msg) {
+                            out = false;
+                            break;
+                        }
+                        target = target.parentElement;
+                    }
+                    if (out) {
+                        location.href = location.href.split('#')[0];
+                    }
+                }
+            } else {
+                location.search.includes('disable_csp') ||
+                document.write(`<meta http-equiv="Content-Security-Policy" content="script-src 'self' blob:; object-src 'none';">`);
+            }
+        </script>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>❄️</text></svg>">
+        <title> Snow </title>
+        <script src="../snow.js"></script>
+        <style>
+            #hof > span {
+                display: inline-table;
+                width: 50px;
+            }
+            code {
+                background-color: #f2f2f2;
+            }
+            .msg {
+                display: none;
+                opacity:1;
+                padding: 30px;
+                background-color:#fcd8db;
+                border: 10px #fb636f solid;
+                position:fixed;
+                width:70%;
+                height:70%;
+                top:13%;
+                left:13%;
+                z-index:1000;
+            }
+            li {
+                padding:3px 10px;
+            }
+        </style>
+    </head>
+    <body style="background-color: #eef3f5;">
+        <div id="msg" class="msg">
+            <a style="font-size: 30px; color: black; text-decoration: none;" href="javascript:location.href = location.href.split('#')[0]">X X X</a>
+            <div align="center" >
+                <h3>The Ultimate (Self) XSS Challenge 😈</h3>
+                <i style="font-size: 24px">~ Can you pop an <a href="javascript:alert(123)">alert</a> in this page?</i>
+                <p style="border: black solid; width: 40%; padding: 5px">
+                    Not your typical XSS challenge this time!
+                </p>
+            </div>
+            <div>
+                <ul>
+                    <br>
+                    <li>
+                        <b>THE GAME IS SIMPLE - SUCCESSFULLY POP AN <CODE>alert</CODE> IN THIS PAGE - THAT'S YOUR ONLY JOB!</b>
+                    </li>
+                    <br>
+                    <li>
+                        You are welcome (even expected) to use <b>self XSS</b> for the task!
+                        <ul>
+                            <li>
+                                That's right! Open the console and <b>run any code you want!</b>
+                            </li>
+                            <ul>
+                                <li>
+                                    Don't waste your time looking for classic XSSes.
+                                </li>
+                            </ul>
+                        </ul>
+                    </li>
+                    <li>
+                        The call for <code>alert</code> API must be applied to the origin of this app!
+                    </li>
+                    <li>
+                        The idea is to try to <b>steal a fresh new <code>alert</code> function</b> from an iframe/new tab/etc.
+                    </li>
+                    <ul>
+                        <li>
+                            For example, try the following self XSSes (hit ▶️ and see result in console):
+                        </li>
+                        <li>
+                            <a title="run" href="javascript:eval(selfXSS1.textContent)">▶️</a>
+                            <code id="selfXSS1">document.body.appendChild( document.createElement('iframe') ).contentWindow.alert.call( top, 'did it work?!' );</code>
+                        </li>
+                        <li>
+                            <a title="run" href="javascript:eval(selfXSS2.textContent)">▶️</a>
+                            <code id="selfXSS2">var i = document.createElement('iframe'); i.onload = () => i.contentWindow.alert.call( top, 'did it work?!' ); document.body.append(i);</code>
+                        </li>
+                        <li>
+                            Those ☝️ aren't going to work 😈 Good Luck! 🍀
+                        </li>
+                    </ul>
+                </ul>
+            </div>
+            <div align="center" >
+                <p style="border: black solid; width: 40%; padding: 5px">
+                    Did you win? 🏆 Prove it! Open an <a href="https://github.com/lavamoat/snow/issues/new?title=I+Bypassed+Snow!+-+Here%27s+how:">issue</a>
+                    <br>
+                    This challenge runs on <a href="https://github.com/lavamoat/snow">Snow ❄️</a>
+                    <br>
+                    ⭐ it if you like it!
+                </p>
+            </div>
+            <div id="hof">
+                <h4>Hall of Fame</h4>
+                <span>1. </span>
+                <span>2. </span>
+                <span>3. </span>
+            </div>
+        </div>
+        <div>
+            <div id="testdiv">
+                <div id="testdiv1"></div>
+                <div id="testdiv2"></div>
+            </div>
+        </div>
+        <h1> Snow ❄️ </h1>
+        <blockquote>
+            Snow aspires to standardize how to recursively own newborn windows within a browser webpage, from the context of the webpage itself.
+            <p>
+                <a href="https://github.com/lavamoat/snow/wiki/Introducing-Snow#why-snow-solves-a-non-trivial-problem">📖 Technical explanation</a>
+                <br>
+                <a href="https://github.com/lavamoat/snow#usage">⚙️ Installation and usage</a>
+                <br>
+                <a href="https://github.com/lavamoat/snow">👩🏽‍💻 Source Code </a>
+                <br>
+                <a href="https://github.com/lavamoat/snow/wiki/Introducing-Snow">💪🏻 Motivation behind this project </a>
+            </p>
+        </blockquote>
+
+        <h1> Demo 🧐 </h1>
+        <blockquote>
+            <h3><i>~ Can you bypass Snow?</i></h3>
+            <ul>
+                <li>This website uses Snow to disable <code>alert</code> API completely</li>
+
+                <li>Use the textarea to run JS code that successfully shows an alert message</li>
+
+                <li>Try to do anything in your power to successfully do so
+                    <ul><li>Remember: Snow doesn't protect against cross origin realms, you must run your alert under this current origin!</li></ul>
+                </li>
+
+                <li>Click the button to execute your code (<code>⌘ + ↵</code> / <code>^ + ↵</code> will work too)</li>
+
+                <li>If you succeed - Congratz! You bypassed Snow (please, <a href="https://github.com/lavamoat/snow/issues/new?title=Snow+can+be+bypassed+with+...&body=Reproduce+by+running+<ENTER_POC_CODE_HERE>"> open an issue</a>, we'd love to improve its security)</li>
+            </ul>
+            <br>
+            <button id="bt"> Run (<code>⌘ + ↵</code> / <code>^ + ↵</code>)</button>
+        </blockquote>
+
+
+        <br><br>
+
+        <textarea id="ta" style="width: 700px; height: 30%"></textarea>
+
+        <br><br>
+
+        <blockquote>
+            Funded by <a href="https://github.com/consensys">Consensys 💙</a>
+            <br>
+            Maintained and developed by <a href="https://github.com/MetaMask">MetaMask 🦊</a>
+            <br>
+            Invented and developed by <a href="https://weizmangal.com/">Gal Weizman 👋🏻</a>
+        </blockquote>
+
+        <script src="util.js"></script>
+    </body>
+</html>

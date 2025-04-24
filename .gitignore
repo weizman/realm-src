@@ -1,0 +1,6 @@
+logs/
+node_modules/
+.idea
+yarn.lock
+package-lock.json
+.yarn

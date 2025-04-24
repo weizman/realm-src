@@ -1,0 +1,57 @@
+{
+  "name": "@lavamoat/snow",
+  "version": "2.0.4",
+  "description": "standardize how to recursively own newborn windows within a web app, from the context of the app itself",
+  "main": "src/index.js",
+  "devDependencies": {
+    "@babel/core": "^7.13.15",
+    "@babel/preset-env": "^7.13.15",
+    "@lavamoat/allow-scripts": "^3.3.2",
+    "@lavamoat/preinstall-always-fail": "^2.1.0",
+    "babel-loader": "^8.2.2",
+    "webpack": "^5.33.2",
+    "webpack-cli": "^4.6.0"
+  },
+  "scripts": {
+    "setup": "yarn && allow-scripts",
+    "demo": "npx serve .",
+    "use-strict-dev": "node -p 'fs.writeFileSync(`snow.js`, `(function(){\n\"use strict\";\nif (typeof SNOW === \"function\") return;\n` + fs.readFileSync(`snow.js`)+ `\n}())`) , `successfully wrapped snow.js with use-strict scope`'",
+    "use-strict-prod": "node -p 'fs.writeFileSync(`snow.prod.js`, `(function(){\"use strict\";if (typeof SNOW === \"function\") return;` + fs.readFileSync(`snow.prod.js`)+ `}())`) , `successfully wrapped snow.prod.js with use-strict scope`'",
+    "build-dev": "webpack --config ./webpack.config.js && yarn use-strict-dev",
+    "build-prod": "webpack --config ./webpack.prod.config.js && yarn use-strict-prod",
+    "build": "yarn build-prod & yarn build-dev",
+    "test-chrome": "./node_modules/.bin/wdio run chrome.wdio.conf.js",
+    "test-safari": "./node_modules/.bin/wdio run safari.wdio.conf.js",
+    "test-firefox": "./node_modules/.bin/wdio run firefox.wdio.conf.js",
+    "test": "yarn test-chrome && yarn test-firefox && yarn test-safari",
+    "build-test-chrome": "yarn build && yarn test-chrome",
+    "build-test-safari": "yarn build && yarn test-safari",
+    "build-test-firefox": "yarn build && yarn test-firefox",
+    "build-test": "yarn build && yarn test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lavamoat/snow.git"
+  },
+  "keywords": [
+    "browser",
+    "security",
+    "sameorigin"
+  ],
+  "files": [
+    "src",
+    "snow.js",
+    "snow.prod.js"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lavamoat/snow/issues"
+  },
+  "homepage": "https://lavamoat.github.io/snow/",
+  "lavamoat": {
+    "allowScripts": {
+      "@lavamoat/preinstall-always-fail": false
+    }
+  }
+}
